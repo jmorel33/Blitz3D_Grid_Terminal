@@ -14,12 +14,14 @@ https://mojolabs.nz/userlog.php?user=10319&log=1460
 
 ////PASTE OF THE LOG HERE////
 Grid World not dead but on standby	2008-04-11
+
 I've worked on a couple other projects meanwhile, I did try some stuff on Grid World but it hasn't really moved. It is still a game I wish to make and I feel it is possible for me to do it. I tried some technologies and wasn't able to do anything good, specially with the shadow system. I also wish I could use a global lighing system like SSAO to help out.
 
 I haven't been able to make models that are compatible to any shadow systems. I am still not good enough generating models that are closed. Maybe someday this will change, which would enable me to use some shadow systems that are available to me now.
 
 
 Lines scheme	2007-11-05
+
 I'm replacing all the underline and strikeout stuff and adding instead a whole LINES scheme in the terminal system. I'm allowing 1 byte per character specifically for lines drawing capabilities. What this enables, is that there will be possibility of a line on ;top, bottom (underline), left, right, horizontal centered (strikeout), vertical centered, 45° cross angle upwards, 45° cross angle downwards.
 
 This should permit me later to add boxes around characters or key entry fields, and do all sorts of other outworldly tricks :P
@@ -163,6 +165,7 @@ EndIf')
 
 
 ramblings about slowness	2007-10-27
+
 I bought the PhysX module :)
 
 Terminal:
@@ -278,10 +281,12 @@ Of course, while I'm working on this project, i'm also finding some old bugs I'm
 
 
 Fewer updates	2007-08-11
+
 There will be fewer updates from now on, as I have another project to worry about, which is very urgent! But the Terminal emulator engine will still get some upgrades, but rare info.
 
 
 terminal evolves	2007-08-05
+
 Here's a recap of what's done and what's not done:
 - Complete the page shadow system (chars, cursors) *** 50% DONE, INCOMPLETE
 Still needs to have the background and a bunch of other stuff completed for this, but the basic is there in the page render and most should already work, but not yet tested.
@@ -355,6 +360,7 @@ End Function
 Soooooo, what I'll probably do is simplify the memory structure and use a bank (again...) and it should bring all this together. Types can be little slow. But reading a bank usually yelds good performances, even thoe peek and poke SHOULD BE much faster than how it is currently in Blitz3D. Yet, we have to understand that we're dealing with protected memory and some virtualization. So in that regard, it is justified.
 
 Jully 30th:
+
 I'm a little pissed about the performance actually! I'll probably have to dig some more performance in this terminal system. My next performance move is to regroup all the layers of a page into a single bank. That should help! I'm positive that I'll save a nice chunk of processing time like this in all page data manipulation scenarios. Now remember, this term project is an accessory to a game, so it shouldn't take 90% of the CPU, nor 50%, nor 25%!!! 10% to 20% of total CPU usage for just the 2D menu should be enough of an overhead. That is basically how it performs right now, if we're going at 60 FPS and we've got a busy page environment. It can go up to 100% in 60 FPS if you have huge pages of 80x60 chars all fully busy in 4 page split mode. But that is the extreme case, not the realistic case.
 
 -*-*-*-*-*-*-*-
@@ -383,6 +389,7 @@ Adding the special features resulted in almost NO performance overhead (less tha
 I might add more special features, but for now, I'll have to contentrate of having this 100% completed on all fronts, and easily accessible.
 
 July 25th:
+
 I took a break last few days, wrote down some more specs, fixed minor issues with the special features segment.
 I'm re-evaluating what is left to do for the term module:
 - Complete the page shadow system (chars, cursors)
@@ -395,12 +402,14 @@ I'm re-evaluating what is left to do for the term module:
 - Complete manual (5% done so far :P)
 
 July 26th:
+
 - Optimize tokenizer with using a bank instead of a token type *** DONE ***
 This brings in a major speed increase! I had to adapt more or less 150 lines of code for this, and it's definately worth the little effort. It's quite a satisfaction when you run a test and you see the new way the tokens are generated and that it just runs flawlessly and several folds faster. I don't think it could get much faster, as I'm using PokeShort / PeekShort to store my tokens :P I don't need to initrialize or to blank out my tokens, as I rely solely on a tokencount ;) . It was a little task to handle the tokens, but still, running the called functions will still require some processor as most of what it's about is shuffling bank data. Now, the only true bottleneck is the graphics card speed. Some performance issues are still quite noticable when playing with alpha'd characters and background tiles, but it's quite possible it's a Blitz3D problem, and hopefully it will be addressed.
 - create CSI_set_page_size *** DONE ***
 Wasn't really involving to create. It works fine, but the tiles in the back are not flush depending on the size that is set. I put FLOATs to get the width and height size. 1.0 is the regular size. So 2.0 is double, 0.5 is half, 0.25 is 4 times smaller... So it's quite easy to make a page zoiom in and out! This is perfect for some title screen effects for example, combined with alpha values, I think it makes for a nice addition.
 
 Julty 27th:
+
 Major rewrite of all of the high level page data manipulation functions completed. These now take in effect the new special features segment. Created a CSI_set_style to set various writing attributes, including the special features. Now the special features is implemented full circle IMHO. Yet, the backgroudn tiles haven't been programmed for this yet, and I don't know if I should. Or maybe if I do, I'll put a mode switch for enabling/disabling special features for the background. I think that should cover the problem.
 
 
@@ -413,19 +422,23 @@ But, there are still some things that need to be addressed before I can move on 
 - After these two big chunks done, I'm planning to expand the terminal concept into a full swing text demo platform, where you will be abel to do scoll text with funky effects, or for example, text that explode, or text that spin madly to then form phrases. This is still an iffy proposition, but I really am thinking of this, and quite often too.
 
 July 10th:
+
 Well, got some default internal fonts now (only 2). If anyone reading this can point me to some very very old system fonts, pixelated ones, that would be good! All 256 characters, it could be any sort of pixel font, 8x8 up to 64x64.
 
 July 13th:
+
 I've implemented a way for the terminal to perform self tests. Seems to work. But I have some problems to fix, but it's pretty neat to see a self test running and then to have the console appear.
 
 After some tests and more tweaking of the self test mode, I've come to the conclusion that the terminal will need a setup mode also. Since 2 days ago, I've added Graphics3D management in the terminal, so the app that will use this won't have to worry about Graphics3D and setting up resolutions and some parameters. But it's not fully implemented. I will have to make a setup for this terminal and some menus and choosing the options. I'll have to make a terminal.cfg type file, that will be the place where the graphics parms will be stored. I'm still thinking on how I'm gonna do this, as the terminal doesn't have any structure for menus, but only clickable items. So, I'll probably just let the mouse choose the parameters, or I can make a function that reads the answerback buffer, as if it's a console app. That shouldn't be too hard actually. But it looks like long days ahead to implement all this.
 
 July 14th:
+
 - Sorted some stuff out for the new graphics3D management, but still no menu. So, that's a a couple of new functions, a new table, and new mode_id's, some various other bits of logic to make this minimalistically implemented. The concept should get expanded.
 - I've started coding term_setup(), but it's going to be one big menu function, the first one in fact. So it's a pilot project for the menus. It's obvious that this will spawn a dozen more new functions as it gets mature. So it will have to take some time to code, before it will actually work.
 - One thing that got finally added: term\mode... Now, most terminal states are centralized in a mode bit array, and implementation is complete. This shoul dhave been done way back, but I'm quite slow with this project.
 
 July 19th:
+
 - Small fixes to the way the terminal gets initialized and shut down.
 - Small fixes to setting up the resolution, more precise checks, but nothing more
 - More standardization of the term\mode with more modes hooked up in there
@@ -434,6 +447,7 @@ July 19th:
 - Added a page clipboard and backup/restore page functions with corresponding calls in sts (set terminal state).
 
 July 20th:
+
 - Started working on a manual. Hopefully it won't take forever to complete.
 - Started working on a very important feature. Basically, it will permit the calling application to address various special parameters on a per character basis. I'm currently working on adding individual control over character; alpha, zoom, x and y offsets, and finally rotation. When these features will be implemented, it will be possible to make all sorts of dazzling effects and sweeps on a per character basis, much like addressing character color and so on. So, implementing this shouldn't be too much of a stomach burn. But I'll give myself a solid week or two. These are basically what I call the "special features set". It's switchable on/off on a per page basis, for performance control, because those extra features come with a cost to performance, it is very important to let the calling app control these with access to these caps control. Thus the flag is allready in SGR (Set Graphics Rendition). Since the data structure of these are the same as all the other page layers, CSI_fill_layer_zone already works for them. But, the toughest part is modifying render_page()........
 - I've expanded the concept of page scrolling, as PCTerm allows scrolling upwards with reverse linefeeds, I had to implement it (better late than never). I've also (again, very late in the doing) implemented TRMOD_WRITE_PROTECT, TRMOD_PROTECT, TRMOD_AUTOPAGE, TRMOD_AUTOSCROLLING, TRMOD_EOL_WRAP, TRMOD_RECEIVE_CR, TRMOD_LOCK_CURSOR_LINE and TRMOD_RECOGNIZE_DEL terminal modes. Half of them are now active flags, the rest of them are yet to be fully implemented in the logic. This is part of an action, to clean up the terminal modes and the logic, as well as cleaning up the ASCII escape sequences.
@@ -451,6 +465,7 @@ I've tought of making a window type management within the terminal, but that won
 There are other tricky things I wish to do also, which are adding shadows to my pages. That would be neat actually, as a page pases over another page, it would leave a shadow behind in an isometric angle, about one or two character size off. I suppose the best way would be to just make a black square with an alpha of something like 0.3 or 0.5. This is just speculative, but I'm interested in doing this.
 
 June 27th:
+
 - Fixed again a huge amount of bugs and inconsistencies
 - Implemented keyboard character repeat and the parms are all tweakable through CSIs
 - Standardized loads of functions, variables, constants
@@ -465,6 +480,7 @@ June 27th:
 - Fixed character blinking, now the fast blink is dependant on the slow blink, if both are applied
 
 June 28th:
+
 - It is now possible to initialize and shutdown the terminal through the buffers using set_terminal_state.
 - Expanded devise_status_report with stuff like report_mouse_status, report_active_pages, ...
 - Implemented set_font_state, set_keyboard_state, set_shadow_state in the pipeline
@@ -474,12 +490,15 @@ June 28th:
 Now, the problem is, since I allow to initialize and shutdown the terminal, and leave access to the buffers, of course, I need to safeguard all the graphics functions that are currently not safeguarded. So, that will create a small overhead in the execution, but it will not be possible to notice IMHO. There is always a way to verify for terminal initilialization in the upper layers instead of hundreds of checks. But I'm still a little puzzled about this. But checking for the buffers being initialized wasn't anything earthshattering as I only check where it counts; term_receive_byte() and term_send_byte()!
 
 June 29th:
+
 I've finally come to the point where I can display CSI error codes in the debug mode! I've set up a dozen error codes and they all seem to report. Debug is presently on term page only (not on files), but a debug destination page parameter is there so the information can be sent to any page which becomes a page for debug use. There are 5 levels of debug. Only level 1 and 2 are able to emit return codes. It is meant so that you can have more limited debug information. In most debug modes, all the CSI stuff is shown on the debug page, but I'll modify it right now so in debug mode 5, only the bad CSIs get shown ;).
 
 June 30th:
+
 Finally got the page display order working (400 lines of code later). But it is halfway implemented as it is not yet used as a reference when displaying pages! So this job is halfway done. The list is implemented in the page system, and contains exactly the information needed thoe, which I have verified. I created a debug CSI where I put the commands that dump debug information on the terminal screen :o where I can verify. But there are many bugs... I've encountered completely misleading stuff where I didn't even send the right parms to the right places and it was a big mess. That's what happens when you wake up the next day, you find stuff like that and you wonder how the heck you came up with such inconsistencies.
 
 July 5th:
+
 - Improved debugging
 - Fixed bugs in draw list
 - Removed page inits from the terminal and put them in the console init procedure as CSIs
@@ -487,6 +506,7 @@ July 5th:
 - From now on, the *only* functions to ever be used from a calling app to the terminal system should now be term_receive_byte() and term_send_byte().
 
 July 6th:
+
 - Rewrote how margins work. Now it makes sense and it is usable. Added CSI_set_margins.
 - Simplified the way pages are initialized, a little.
 - There was a nasty bug about double/triple/quad size text, where it was massing up the letters (scrambling them!) depending on wether or not and how I was moving the pages. Specially if the page was bleeding off the edges (top and left). So I managed to fix that in a way with minuscule impact on framerate.
@@ -508,20 +528,24 @@ I've corrected many bugs and expanded on the VT commands also. Sped up yet again
 I've changed my overlay screen from page 4 to page 7, and reserved page 4, 5, 6 for game menus. Page 0, 1, 2, 3 remains console screens.
 
 June 8th:
+
 I've finally come to make the clicking, masking code to work, both mouse, and screen display. I had a bug that was keeping me from advancing on that issue for 2 days, but now it is resolved... I must admit I've been quite tired lately. Both the heat is turning on over in the Montreal region and the humidity is up high. It's getting hot and the sky isn't really shining bright. Anyhow, I'm happy I got that done and now I can move to something else, and put some headaches aside.
 
 There are some other things that need to be done besides being able to click things on the VT screen; I need to be able to receive the clicked item id at the console / calling app! Not only must I send it from the Terminal, but the receiving app must understand what I am sending. But, I have absolutely no tools set up to do so! Yet, I do send streams to calling apps thru a sandard send/receive byte system that I implemented in order to do so. But how do you make a calling app understand what it is receiving? Currently, the calling app is receiving key entries and is handling that on it's own thru my magic gate. But, if I wanted to, I could implement a VT callback function system, but it's pretty hard work, considering how much effort I spend into implementing a full VT/ANSI stream CSI decoder parser. But, apparently, standard VT terminals have the ability to both send and receive CSIs, so I guess I'll have to do that for both directions. In essence, the terminal will have to build it's own CSIs and transcode values for the callback stream, so the calling app can receive and then decode the information. All this brouaha is specifically so that I have the flexibility to send bursts of CSIs and whatnot to whichever direction and have both sides react accordingly to their dialogs. And, that should make for a wonderful little console/terminal world.
 
 June 9th:
+
 - Implemented DSR (Device Status Report), which now can report a bunch of stuff back to the calling application. Most notably, it reports the clicked item. But also, screen resolution, cursor position, mouse position, terminal trace status, terminal split mode, etc. This is how the calling application gets it's info from the terminal, basically. Whatever I need to report back, I can just add more commands here.
 - There are effects I wish to implement. I'm trying to figure out where to do this. I've already added the 256 color palette. Also, with VT commands to manage them, and shift palette colors around. But I have other palette tweak ideas. I don't think I need to do fade in/out as this is handled by the alpha of each pages. Maybe morphing one palette into another(?)... Other than palette management, I've tought of character scrolling functions. Appearing / disappearing by various methods. That's something that popped into mind often. If I want to do that, I'll have to locate every character with an X, Y position, angle, etc etc. That is one heck of a task for a terminal. But very feasible. I'm just not sure if it is appropriate. It's a definite performance hit. But I have many tricks that I can use to properly distribute tasks and make this as light as possible on the CPU side.
 
 June 21st:
+
 - Took a big break from coding. But managed to tweak a bit at the terminal. I've basically made the parsers work with banks only, which makes them run much faster now. fixed a batch of bugs, and also improved error checking/correction on the CSI command side.
 - I'm considering implementing some window management, which would facilitate using a file selector. With window management, it is possible to not only do a file selector, but a text editor in a window, forms, chat, e-mail, IRC, etc etc... All this is quite easily feasible with pages, just that having the possibility of popping some windows and dragging them with the mouse seems appealing. Like a lot of other ideas, this might go in the bin.
 
 
 Terminal sub project comming to terme	2007-05-26
+
 Here's a recap of the doings:
 - re-implemented underline and strikeout, which are now more efficient and don't take more than 1 or 2 fps overhead when screen is fully busy with those things everywhere
 - added a mouse active / inactive flag, so the game application has control over the fact that the user may or may not use a mouse within the terminal
@@ -535,6 +559,7 @@ Here's a recap of the doings:
 - Started implementing protected zones. It works fine, but is not hooked to many things yet.
 
 June 1st:
+
 - Multiple sets of palette definitions are now possible, with the option to rorate palette colors (for some color effects)
 - Implemented font double/triple/quad width as well as double/triple/quad height. The usage is not yet simplified.
 - Some speedup to page drawing, for a 20-25% speed increase when terminal pages are blank, but only about 2-3% speed increase when page is fully busy.
@@ -595,6 +620,7 @@ Now it's very important for me to mention that, I firmly believe that I haven't 
 
 
 Small advances	2007-05-12
+
 - Worked on the tokenizer / requester
 - Worled on my commands list and components list
 - Sped up the terminal display (a full page of text and various colors went from 110 fps to 170 fps, and an empty page went from 200 fps to around 900 fps. It can still be improved, in due time)
