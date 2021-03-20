@@ -10,6 +10,18 @@ https://mojolabs.nz/posts.php?topic=77810
 
 This was my work log for what I called "Grid World" but in fact it has mostly just Grid Terminal" log information as I have put aside a lot of the main Grid World work.
 
+SUMMARY:
+- It was a tile based engine
+- It allowed me to create a small 2D platformer in less than a week I called TURBOCHOMP
+- It was a terminal, os I had a full "DOS" like environment in there
+- It handles ANSi graphics, as well as a series of VT terminal compliancies as I basically added *at least* up to VT220 standards
+- It supported 16 and 256 color palettes
+- You could drag the terminal around X and Y axis (basically like a window, or like the Amiga screen layers per scanline)
+- It supported many features such as lines ( allowed to do underline, but also all the other angle of lines ), Shadows (initially for text shadow)
+- Tiles could be layed out in any X and Y amounts and size
+
+For all the details, feel free to read the log.  (I tried to put it on GitHub but the carruiage returns don't seem to work even if they are present).
+
 https://mojolabs.nz/userlog.php?user=10319&log=1460
 
 ////PASTE OF THE LOG HERE////
