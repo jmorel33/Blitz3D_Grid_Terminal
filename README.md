@@ -3,7 +3,9 @@
 Way Back the Fast libs (author MikhailV) enabled Blitz#d users to do awesome things for the time.
 
 My handle on the Blitz forums was _33:
+
 https://mojolabs.nz/posts.php?topic=69541
+
 https://mojolabs.nz/posts.php?topic=77810
 
 This was my work log for what I called "Grid World" but in fact it has mostly just Grid Terminal" log information as I have put aside a lot of the main Grid World work.
