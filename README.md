@@ -13,6 +13,7 @@ This was my work log for what I called "Grid World" but in fact it has mostly ju
 https://mojolabs.nz/userlog.php?user=10319&log=1460
 
 ////PASTE OF THE LOG HERE////
+
 Grid World not dead but on standby	2008-04-11
 
 I've worked on a couple other projects meanwhile, I did try some stuff on Grid World but it hasn't really moved. It is still a game I wish to make and I feel it is possible for me to do it. I tried some technologies and wasn't able to do anything good, specially with the shadow system. I also wish I could use a global lighing system like SSAO to help out.
