@@ -40,7 +40,7 @@ I'm replacing all the underline and strikeout stuff and adding instead a whole L
 This should permit me later to add boxes around characters or key entry fields, and do all sorts of other outworldly tricks :P
 
 So, as a souvernir, here is the "old" strikeout and underline drawing code set for deletion:
-format_codebox(' ; strikeout
+```format_codebox(' ; strikeout
 argb% = PeekInt (palette_table, term\page[page_id]\strikeout_color Shl 2)
 SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
 Local strikeout_len% = 0
@@ -175,7 +175,7 @@ EndIf
 
 EndDraw
 EndIf')
-
+```
 
 ramblings about slowness	2007-10-27
 
@@ -225,7 +225,7 @@ Side Project	2007-08-15
 This live screenshot is from a "secret" side project of mine, for a friend. I'm using of coruse Grid Terminal for this very classic color bar screen. Here is the function that draws this screen, all using built in fonts. It is called only once, and the terminal simply updates it, with the blinking, the cursor animation and what have you. The test layer over the color bar is a 64x48 text layer for my timecode. It's using another built in font.
 
 Here is the source code that builds the color bar backdrop with the titling:format_code('Function color_bar(width% = 40, height% = 30, title$, artist$)
-
+```
 y_offset% = 0
 
 c$ = ""
@@ -289,7 +289,7 @@ term_send_string(" ")
 term_send_command(CSI_cursor_update, 37,20)
 End Function
 ')
-
+```
 Of course, while I'm working on this project, i'm also finding some old bugs I'm sqwashing at the same time, and improving some stuff that I need as I go along.
 
 
