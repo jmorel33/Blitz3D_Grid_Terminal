@@ -40,7 +40,7 @@ I'm replacing all the underline and strikeout stuff and adding instead a whole L
 This should permit me later to add boxes around characters or key entry fields, and do all sorts of other outworldly tricks :P
 
 So, as a souvernir, here is the "old" strikeout and underline drawing code set for deletion:
-```format_codebox(' ; strikeout
+```
 argb% = PeekInt (palette_table, term\page[page_id]\strikeout_color Shl 2)
 SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
 Local strikeout_len% = 0
@@ -49,63 +49,63 @@ SetLineWidth strikeout_thickness
 SetBlend FI_ALPHABLEND
 SetAlpha term\page[page_id]\text_alpha
 If special_features And PGDPS_SF_UPDATE_CHARS_ON Then
-For row = start_row To end_row
-For col = start_col To end_col
-disp = row * cols + col
-If PeekByte(item_table, disp) = mouse_saved_item Then
-strikeout = (PeekByte(attr_mask_table, disp) And TXRNA_STRIKEOUT_ON)
+  For row = start_row To end_row
+    For col = start_col To end_col
+      disp = row * cols + col
+      If PeekByte(item_table, disp) = mouse_saved_item Then
+        strikeout = (PeekByte(attr_mask_table, disp) And TXRNA_STRIKEOUT_ON)
+      Else
+        strikeout = (PeekByte(attr_table, disp) And TXRNA_STRIKEOUT_ON)
+      EndIf
+      If strikeout Then
+        If (display_state And PGDPS_SF_UPDATE_ANGLE_ON) > False Then
+          SetRotation PeekByte(angle_table, disp) * 2
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_ALPHA_ON) > False Then
+          SetAlpha PeekByte(alpha_table, disp) * 0.003921569
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_ZOOM_ON) > False Then
+          SetScale PeekByte(x_zoom_table, disp) * 0.015625, PeekByte(y_zoom_table, disp) * 0.015625
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_OFFSET_ON) > False Then
+          SetOrigin PeekByte(x_offset_table, disp) - 128, PeekByte(y_offset_table, disp) - 128
+        EndIf
+        SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
+        DrawLineSimple col * char_width, (row + 1) * char_height - char_height * 0.5, (col + 1) * char_width, (row + 1) * char_height - char_height * 0.5
+      EndIf
+    Next
+  Next
 Else
-strikeout = (PeekByte(attr_table, disp) And TXRNA_STRIKEOUT_ON)
-EndIf
-If strikeout Then
-If (display_state And PGDPS_SF_UPDATE_ANGLE_ON) > False Then
-SetRotation PeekByte(angle_table, disp) * 2
-EndIf
-If (display_state And PGDPS_SF_UPDATE_ALPHA_ON) > False Then
-SetAlpha PeekByte(alpha_table, disp) * 0.003921569
-EndIf
-If (display_state And PGDPS_SF_UPDATE_ZOOM_ON) > False Then
-SetScale PeekByte(x_zoom_table, disp) * 0.015625, PeekByte(y_zoom_table, disp) * 0.015625
-EndIf
-If (display_state And PGDPS_SF_UPDATE_OFFSET_ON) > False Then
-SetOrigin PeekByte(x_offset_table, disp) - 128, PeekByte(y_offset_table, disp) - 128
-EndIf
-SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
-DrawLineSimple col * char_width, (row + 1) * char_height - char_height * 0.5, (col + 1) * char_width, (row + 1) * char_height - char_height * 0.5
-EndIf
-Next
-Next
-Else
-For row = start_row To end_row
-For col = start_col To end_col
-disp = row * cols + col
-If PeekByte(item_table, disp) = mouse_saved_item Then
-strikeout = (PeekByte(attr_mask_table, disp) And TXRNA_STRIKEOUT_ON)
-Else
-strikeout = (PeekByte(attr_table, disp) And TXRNA_STRIKEOUT_ON)
-EndIf
-If strikeout Then
-If strikeout_len = 0 Then draw_start_col = col
-strikeout_len = strikeout_len + 1
-Else
-If strikeout_len > 0 Then
-draw_start_X = draw_start_col * char_width
-draw_start_Y = row * char_height + Float char_height * 0.5
-;DrawRectSimple draw_start_X, draw_start_Y, char_width * strikeout_len, strikeout_thickness, 1
-DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * strikeout_len, draw_start_Y
-strikeout_len = 0
-EndIf
-EndIf
-Next
-If strikeout_len > 0 Then
-draw_start_X = draw_start_col * char_width
-draw_start_Y = row * char_height + Float char_height * 0.5
-;DrawRectSimple draw_start_X, draw_start_Y, char_width * strikeout_len, strikeout_thickness, 1
-DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * strikeout_len, draw_start_Y
+  For row = start_row To end_row
+    For col = start_col To end_col
+      disp = row * cols + col
+      If PeekByte(item_table, disp) = mouse_saved_item Then
+        strikeout = (PeekByte(attr_mask_table, disp) And TXRNA_STRIKEOUT_ON)
+      Else
+        strikeout = (PeekByte(attr_table, disp) And TXRNA_STRIKEOUT_ON)
+      EndIf
+      If strikeout Then
+        If strikeout_len = 0 Then draw_start_col = col
+        strikeout_len = strikeout_len + 1
+      Else
+        If strikeout_len > 0 Then
+          draw_start_X = draw_start_col * char_width
+          draw_start_Y = row * char_height + Float char_height * 0.5
+          ;DrawRectSimple draw_start_X, draw_start_Y, char_width * strikeout_len, strikeout_thickness, 1
+          DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * strikeout_len, draw_start_Y
+          strikeout_len = 0
+        EndIf
+      EndIf
+    Next
+    If strikeout_len > 0 Then
+      draw_start_X = draw_start_col * char_width
+      draw_start_Y = row * char_height + Float char_height * 0.5
+      ;DrawRectSimple draw_start_X, draw_start_Y, char_width * strikeout_len, strikeout_thickness, 1
+      DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * strikeout_len, draw_start_Y
 
-strikeout_len = 0
-EndIf
-Next
+      strikeout_len = 0
+    EndIf
+  Next
 EndIf
 
 ; underline
@@ -117,64 +117,64 @@ SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
 SetBlend FI_ALPHABLEND
 SetAlpha term\page[page_id]\text_alpha
 If special_features And PGDPS_SF_UPDATE_CHARS_ON Then
-For row = start_row To end_row
-For col = start_col To end_col
-disp = row * cols + col
-If PeekByte(item_table, disp) = mouse_saved_item Then
-underline% = (PeekByte(attr_mask_table, disp) And TXRNA_UNDERLINE_ON)
+  For row = start_row To end_row
+    For col = start_col To end_col
+      disp = row * cols + col
+      If PeekByte(item_table, disp) = mouse_saved_item Then
+        underline% = (PeekByte(attr_mask_table, disp) And TXRNA_UNDERLINE_ON)
+      Else
+        underline% = (PeekByte(attr_table, disp) And TXRNA_UNDERLINE_ON)
+      EndIf
+      If underline Then
+        If (display_state And PGDPS_SF_UPDATE_ANGLE_ON) > False Then
+          SetRotation PeekByte(angle_table, disp) * 2
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_ALPHA_ON) > False Then
+          SetAlpha PeekByte(alpha_table, disp) * 0.003921569
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_ZOOM_ON) > False Then
+          SetScale PeekByte(x_zoom_table, disp) * 0.015625, PeekByte(y_zoom_table, disp) * 0.015625
+        EndIf
+        If (display_state And PGDPS_SF_UPDATE_OFFSET_ON) > False Then
+          SetOrigin PeekByte(x_offset_table, disp) - 128, PeekByte(y_offset_table, disp) - 128
+        EndIf
+        SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
+        DrawLineSimple col * char_width, (row + 1) * char_height - 1, (col + 1) * char_width, (row + 1) * char_height - 1
+      EndIf
+    Next
+  Next
 Else
-underline% = (PeekByte(attr_table, disp) And TXRNA_UNDERLINE_ON)
-EndIf
-If underline Then
-If (display_state And PGDPS_SF_UPDATE_ANGLE_ON) > False Then
-SetRotation PeekByte(angle_table, disp) * 2
-EndIf
-If (display_state And PGDPS_SF_UPDATE_ALPHA_ON) > False Then
-SetAlpha PeekByte(alpha_table, disp) * 0.003921569
-EndIf
-If (display_state And PGDPS_SF_UPDATE_ZOOM_ON) > False Then
-SetScale PeekByte(x_zoom_table, disp) * 0.015625, PeekByte(y_zoom_table, disp) * 0.015625
-EndIf
-If (display_state And PGDPS_SF_UPDATE_OFFSET_ON) > False Then
-SetOrigin PeekByte(x_offset_table, disp) - 128, PeekByte(y_offset_table, disp) - 128
-EndIf
-SetColor (argb Shr 16) And $ff, (argb Shr 8) And $ff, argb And $ff
-DrawLineSimple col * char_width, (row + 1) * char_height - 1, (col + 1) * char_width, (row + 1) * char_height - 1
-EndIf
-Next
-Next
-Else
-For row = start_row To end_row
-For col = start_col To end_col
-disp = row * cols + col
-If PeekByte(item_table, disp) = mouse_saved_item Then
-underline% = (PeekByte(attr_mask_table, disp) And TXRNA_UNDERLINE_ON)
-Else
-underline% = (PeekByte(attr_table, disp) And TXRNA_UNDERLINE_ON)
-EndIf
-If underline Then
-If underline_len = 0 Then draw_start_col = col
-underline_len = underline_len + 1
-Else
-If underline_len > 0 Then
-draw_start_X = draw_start_col * char_width
-draw_start_Y = row * char_height + char_height - 1
-DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * underline_len, draw_start_Y
-underline_len = 0
-EndIf
-EndIf
-Next
-If underline_len > 0 Then
-draw_start_X = draw_start_col * char_width
-draw_start_Y = row * char_height + char_height - 1
-DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * underline_len, draw_start_Y
-underline_len = 0
-EndIf
-Next
-EndIf
+  For row = start_row To end_row
+    For col = start_col To end_col
+      disp = row * cols + col
+      If PeekByte(item_table, disp) = mouse_saved_item Then
+        underline% = (PeekByte(attr_mask_table, disp) And TXRNA_UNDERLINE_ON)
+      Else
+        underline% = (PeekByte(attr_table, disp) And TXRNA_UNDERLINE_ON)
+      EndIf
+      If underline Then
+        If underline_len = 0 Then draw_start_col = col
+          underline_len = underline_len + 1
+        Else
+          If underline_len > 0 Then
+            draw_start_X = draw_start_col * char_width
+            draw_start_Y = row * char_height + char_height - 1
+            DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * underline_len, draw_start_Y
+            underline_len = 0
+          EndIf
+        EndIf
+      Next
+      If underline_len > 0 Then
+        draw_start_X = draw_start_col * char_width
+        draw_start_Y = row * char_height + char_height - 1
+        DrawLineSimple draw_start_X, draw_start_Y, draw_start_X + char_width * underline_len, draw_start_Y
+        underline_len = 0
+      EndIf
+    Next
+  EndIf
 
-EndDraw
-EndIf')
+  EndDraw
+EndIf
 ```
 
 ramblings about slowness	2007-10-27
@@ -224,8 +224,10 @@ Side Project	2007-08-15
 
 This live screenshot is from a "secret" side project of mine, for a friend. I'm using of coruse Grid Terminal for this very classic color bar screen. Here is the function that draws this screen, all using built in fonts. It is called only once, and the terminal simply updates it, with the blinking, the cursor animation and what have you. The test layer over the color bar is a 64x48 text layer for my timecode. It's using another built in font.
 
-Here is the source code that builds the color bar backdrop with the titling:format_code('Function color_bar(width% = 40, height% = 30, title$, artist$)
+Here is the source code that builds the color bar backdrop with the titling:
 ```
+Function color_bar(width% = 40, height% = 30, title$, artist$)
+
 y_offset% = 0
 
 c$ = ""
@@ -239,7 +241,7 @@ d$ = d$ + Chr$(27) + "[164" + Chr$(CSI_set_bkgnd_color) + " "
 d$ = d$ + Chr$(27) + "[165" + Chr$(CSI_set_bkgnd_color) + " "
 d$ = d$ + Chr$(27) + "[166" + Chr$(CSI_set_bkgnd_color) + " "
 For y = 0 To 20
-c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
+  c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
 Next
 d$ = ""
 d$ = d$ + Chr$(27) + "[166"+Chr$(CSI_set_bkgnd_color)+" "
@@ -250,7 +252,7 @@ d$ = d$ + Chr$(27) + "[162"+Chr$(CSI_set_bkgnd_color)+" "
 d$ = d$ + Chr$(27) + "[169"+Chr$(CSI_set_bkgnd_color)+" "
 d$ = d$ + Chr$(27) + "[160"+Chr$(CSI_set_bkgnd_color)+" "
 For y = 21 To 22
-c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
+  c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
 Next
 d$ = ""
 d$ = d$ + Chr$(27) + "[167"+Chr$(CSI_set_bkgnd_color)+" "
@@ -262,7 +264,7 @@ d$ = d$ + Chr$(27) + "[169"+Chr$(CSI_set_bkgnd_color)+" "
 d$ = d$ + Chr$(27) + "[170"+Chr$(CSI_set_bkgnd_color)+" "
 d$ = d$ + Chr$(27) + "[0"+Chr$(CSI_set_bkgnd_color)+" "
 For y = 23 To 29
-c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
+  c$ = c$ + Chr$(27) + "[0;" + Str$(y_offset + y) + Chr$(CSI_cursor_update) + d$
 Next
 c$ = c$ + Chr$(27) + "[0;29" + Chr$(CSI_cursor_update)
 
@@ -288,7 +290,6 @@ term_send_command(CSI_cursor_update, 38,19)
 term_send_string(" ")
 term_send_command(CSI_cursor_update, 37,20)
 End Function
-')
 ```
 Of course, while I'm working on this project, i'm also finding some old bugs I'm sqwashing at the same time, and improving some stuff that I need as I go along.
 
